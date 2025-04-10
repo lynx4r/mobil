@@ -1,0 +1,163 @@
+** BAYRAK/ULKE **
+
+
+// TASARIM //
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/turkey" />
+
+    <TextView
+        android:id="@+id/tv_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:text="Ülke" />
+
+    <TextView
+        android:id="@+id/tv_baskent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginBottom="10dp"
+        android:text="Başkent" />
+
+    <TextView
+        android:id="@+id/tv_dil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginBottom="10dp"
+        android:text="Dil" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_geri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="geriAl"
+            android:text="Geri"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_ileri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="ileriAl"
+            android:text="İleri"
+            android:textSize="25sp" />
+    </LinearLayout>
+</LinearLayout>
+
+
+// JAVA //
+
+package com.example.ulketanitim;
+
+public class Ulke {
+    int bayrak;
+    String ad;
+    String baskent;
+    String dil;
+
+    public Ulke(int bayrak, String ad, String baskent, String dil) {
+        this.bayrak = bayrak;
+        this.ad = ad;
+        this.baskent = baskent;
+        this.dil = dil;
+    }
+}
+
+
+//MAIN //
+
+package com.example.ulketanitim;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+
+
+import com.example.ulketanitim.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+
+
+public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding binding;
+    ArrayList<Ulke> ulkeler;
+    int sira;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding=ActivityMainBinding.inflate(getLayoutInflater());
+        View view=binding.getRoot();
+        setContentView(view);
+        ulkeler=new ArrayList<>();
+        sira=0;
+
+        Ulke arjantin=new Ulke(R.drawable.argentina,"Arjantin","Buenos Aires","İspanyolca");
+        Ulke afganistan=new Ulke(R.drawable.afghanistan,"Afganistan","Kabil","Farsça");
+        Ulke brezilya=new Ulke(R.drawable.brazil,"Brezilya","Brazilya","Portekizcesi");
+        Ulke kanada=new Ulke(R.drawable.canada,"Kanada","Ottava","Fransızca");
+        Ulke italya=new Ulke(R.drawable.italy,"İtalya","Roma","İtalyanca");
+
+        ulkeler.add(arjantin);
+        ulkeler.add(afganistan);
+        ulkeler.add(brezilya);
+        ulkeler.add(kanada);
+        ulkeler.add(italya);
+
+        binding.imageView.setImageResource(ulkeler.get(0).bayrak);
+        binding.tvAd.setText(ulkeler.get(0).ad);
+        binding.tvBaskent.setText("Başkent: "+ulkeler.get(0).baskent);
+        binding.tvDil.setText("Dili: "+ulkeler.get(0).dil);
+
+    }
+
+    public void geriAl(View view){
+        if(sira>0){
+            sira--;
+            binding.imageView.setImageResource(ulkeler.get(sira).bayrak);
+            binding.tvAd.setText(ulkeler.get(sira).ad);
+            binding.tvBaskent.setText("Başkent: "+ulkeler.get(sira).baskent);
+            binding.tvDil.setText("Dili: "+ulkeler.get(sira).dil);
+        }
+    }
+
+    public void ileriAl(View view){
+        if(sira< ulkeler.size()-1){
+            sira++;
+            binding.imageView.setImageResource(ulkeler.get(sira).bayrak);
+            binding.tvAd.setText(ulkeler.get(sira).ad);
+            binding.tvBaskent.setText("Başkent: "+ulkeler.get(sira).baskent);
+            binding.tvDil.setText("Dili: "+ulkeler.get(sira).dil);
+        }
+    }
